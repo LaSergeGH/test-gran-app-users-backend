@@ -2,7 +2,7 @@ const express = require('express')
 // const { FieldValue } = require('firebase-admin/firestore')
 // const { collection, query, where, getDocs, doc, setDoc } = require("firebase/firestore");
 const app = express()
-const port = 8383 // process.env.PORT указывается для heroku
+const port = process.env.PORT || 8383 // process.env.PORT указывается для heroku
 const { v4: UUID } = require('uuid')
 const { db } = require('./firebase.js')
 
@@ -29,7 +29,6 @@ app.get('/users__old', async (req, res) => {
 })
  */
 
-// DONE
 app.get('/users', async (req, res) => {
   const usersRef = db.collection('users');
   const snapshot = await usersRef.get();
@@ -55,7 +54,6 @@ app.get('/friends/:name', (req, res) => {
 })
  */
 
-// DONE
 app.post('/add-user', async (req, res) => {
   const { login, email, country, age } = req.body
   const userId = UUID();
@@ -72,7 +70,6 @@ app.post('/add-user', async (req, res) => {
   res.status(200).send('Полователь успешно создан')
 })
 
-// DONE
 app.patch('/edit-user', async (req, res) => {
   const { login, email, country, age, id } = req.body;
 
@@ -88,7 +85,6 @@ app.patch('/edit-user', async (req, res) => {
   res.status(200).send('Полователь успешно отредактирован')
 })
 
-// DONE
 app.delete('/delete-user', async (req, res) => {
   const { id } = req.body
   const deleteResult = await db.collection('users').doc(id).delete();
