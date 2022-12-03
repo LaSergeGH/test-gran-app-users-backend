@@ -35,23 +35,26 @@ app.get('/users', async (req, res) => {
   if (snapshot.empty) {
     return res.sendStatus(400)
   }
-  const resultData = [];
-  snapshot.forEach(doc => {
-    resultData.push(doc);
-  });
-
-  res.status(200).send(resultData)
-  /* 
-    const { _fieldsProto } = doc;
-      const keys = Object.keys(_fieldsProto);
-      const user = {};
-      keys.forEach(key => {
-        const valueKey = (key === 'integerValue') ? 'integerValue' : 'stringValue';
-        user[key] = _fieldsProto[key][valueKey]
-      })
+  /*   
+    const resultData = [];
+    snapshot.forEach(doc => {
+      resultData.push(doc);
+    });
   
-      resultData.push(user);
-       */
+    res.status(200).send(resultData)
+     */
+  const { _fieldsProto } = doc;
+  const keys = Object.keys(_fieldsProto);
+  const user = {};
+  keys.forEach(key => {
+    // const valueKey = (key === 'integerValue') ? 'integerValue' : 'stringValue';
+    const obj = _fieldsProto[key];
+    const { valueType } = obj;
+    user[key] = obj[valueType]
+  })
+
+  resultData.push(user);
+
 })
 
 /* 
