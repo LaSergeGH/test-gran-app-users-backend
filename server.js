@@ -35,28 +35,38 @@ app.get('/users', async (req, res) => {
   if (snapshot.empty) {
     return res.sendStatus(400)
   }
+  const resultData = [];
   /*   
-    const resultData = [];
     snapshot.forEach(doc => {
       resultData.push(doc);
     });
-  
-    res.status(200).send(resultData)
      */
-  const { _fieldsProto } = doc;
-  const keys = Object.keys(_fieldsProto);
-  const user = {};
-  keys.forEach(key => {
-    // const valueKey = (key === 'integerValue') ? 'integerValue' : 'stringValue';
-    const obj = _fieldsProto[key];
-    // const { valueType } = obj;
-    // user[key] = obj[valueType]
-    user[key] = _fieldsProto[key].valueType
-  })
+  snapshot.forEach(doc => {
+    const { _fieldsProto } = doc;
+    const keys = Object.keys(_fieldsProto);
+    const user = {};
+    keys.forEach(key => {
+      // const valueKey = (key === 'integerValue') ? 'integerValue' : 'stringValue';
+      const obj = _fieldsProto[key];
+      const { valueType } = obj;
+      user[key] = obj[valueType]
+      // user[key] = _fieldsProto[key].valueType
+    })
 
-  resultData.push(user);
+    resultData.push(user);
+  });
 
+  res.status(200).send(resultData)
 })
+/*
+{
+"age": 100,
+"country": "Ireland",
+"email": "oldman@mail.com",
+"id": "51778ab7-4b54-4806-8342-918cc8f58105"
+"login": "oldman"
+}
+*/
 
 /* 
 // OLD - may be userful
