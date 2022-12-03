@@ -48,8 +48,9 @@ app.get('/users', async (req, res) => {
     keys.forEach(key => {
       // const valueKey = (key === 'integerValue') ? 'integerValue' : 'stringValue';
       const obj = _fieldsProto[key];
-      const { valueType } = obj;
-      user[key] = obj[valueType]
+      // const { valueType } = obj;
+      // user[key] = obj[valueType]
+      user[key] = 'lololo'
       // user[key] = _fieldsProto[key].valueType
     })
 
