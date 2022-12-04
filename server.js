@@ -1,20 +1,14 @@
 const express = require('express')
 // const { FieldValue } = require('firebase-admin/firestore')
 // const { collection, query, where, getDocs, doc, setDoc } = require("firebase/firestore");
+const cors = require('cors')
 const app = express()
+app.use(cors())
 const port = process.env.PORT || 8383 // process.env.PORT указывается для heroku
 const { v4: UUID } = require('uuid')
 const { db } = require('./firebase.js')
 
 app.use(express.json())
-/* 
-const friends = {
-  'james': 'friend',
-  'larry': 'friend',
-  'lucy': 'friend',
-  'banana': 'enemy',
-}
-*/
 
 /* 
 // OLD - may be userful
@@ -36,21 +30,15 @@ app.get('/users', async (req, res) => {
     return res.sendStatus(400)
   }
   const resultData = [];
-  /*   
-    snapshot.forEach(doc => {
-      resultData.push(doc);
-    });
-     */
+
   snapshot.forEach(doc => {
     const { _fieldsProto } = doc;
     const keys = Object.keys(_fieldsProto);
     const user = {};
     keys.forEach(key => {
-      // const valueKey = (key === 'integerValue') ? 'integerValue' : 'stringValue';
       const obj = _fieldsProto[key];
       const { valueType } = obj;
       user[key] = obj[`${valueType}`]
-      // user[key] = _fieldsProto[key].valueType
     })
 
     resultData.push(user);
@@ -58,15 +46,6 @@ app.get('/users', async (req, res) => {
 
   res.status(200).send(resultData)
 })
-/*
-{
-"age": 100,
-"country": "Ireland",
-"email": "oldman@mail.com",
-"id": "51778ab7-4b54-4806-8342-918cc8f58105"
-"login": "oldman"
-}
-*/
 
 /* 
 // OLD - may be userful
