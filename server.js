@@ -1,10 +1,8 @@
 const express = require('express')
-// const { FieldValue } = require('firebase-admin/firestore')
-// const { collection, query, where, getDocs, doc, setDoc } = require("firebase/firestore");
 const cors = require('cors')
 const app = express()
 app.use(cors())
-const port = process.env.PORT || 8383 // process.env.PORT указывается для heroku
+const port = process.env.PORT || 8383
 const { v4: UUID } = require('uuid')
 const { db } = require('./firebase.js')
 
@@ -71,7 +69,7 @@ app.post('/add-user', async (req, res) => {
     age,
   }, { merge: true })
   // friends[name] = status
-  res.status(200).send('Полователь успешно создан')
+  res.status(200).send('Пользователь успешно создан')
 })
 
 app.patch('/edit-user', async (req, res) => {
@@ -86,7 +84,7 @@ app.patch('/edit-user', async (req, res) => {
     age,
   }, { merge: true })
   // friends[name] = newStatus
-  res.status(200).send('Полователь успешно отредактирован')
+  res.status(200).send('Пользователь успешно отредактирован')
 })
 
 app.delete('/delete-user', async (req, res) => {
