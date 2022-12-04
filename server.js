@@ -90,7 +90,7 @@ app.patch('/edit-user', async (req, res) => {
 })
 
 app.delete('/delete-user', async (req, res) => {
-  const { id } = req.body
+  const { id } = req.query
   const deleteResult = await db.collection('users').doc(id).delete();
 
   res.status(200).send('Пользователь успешно удалён')
